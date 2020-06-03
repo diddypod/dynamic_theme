@@ -4,28 +4,30 @@ class BrightnessSwitcherDialog extends StatelessWidget {
   const BrightnessSwitcherDialog({Key key, this.onSelectedTheme})
       : super(key: key);
 
-  final ValueChanged<Brightness> onSelectedTheme;
+  final ValueChanged<ThemeMode> onSelectedTheme;
 
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
       title: const Text('Select Theme'),
       children: <Widget>[
-        RadioListTile<Brightness>(
-          value: Brightness.light,
-          groupValue: Theme.of(context).brightness,
-          onChanged: (Brightness value) {
-            onSelectedTheme(Brightness.light);
+        ListTile(
+          onTap: () {
+            onSelectedTheme(ThemeMode.light);
           },
           title: const Text('Light'),
         ),
-        RadioListTile<Brightness>(
-          value: Brightness.dark,
-          groupValue: Theme.of(context).brightness,
-          onChanged: (Brightness value) {
-            onSelectedTheme(Brightness.dark);
+        ListTile(
+          onTap: () {
+            onSelectedTheme(ThemeMode.dark);
           },
-          title: const Text('Spooky  👻'),
+          title: const Text('Dark'),
+        ),
+        ListTile(
+          onTap: () {
+            onSelectedTheme(ThemeMode.system);
+          },
+          title: const Text('System'),
         ),
       ],
     );

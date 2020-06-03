@@ -8,16 +8,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DynamicTheme(
-      defaultBrightness: Brightness.light,
-      data: (Brightness brightness) => ThemeData(
-        primarySwatch: Colors.indigo,
-        brightness: brightness,
-      ),
-      loadBrightnessOnStart: true,
-      themedWidgetBuilder: (BuildContext context, ThemeData theme) {
+      loadThemeModeOnStart: true,
+      themedWidgetBuilder: (BuildContext context, ThemeMode themeMode) {
         return MaterialApp(
           title: 'Flutter Demo',
-          theme: theme,
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          themeMode: themeMode,
           home: const MyHomePage(title: 'Flutter Demo Home Page'),
         );
       },
@@ -45,12 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RaisedButton(
-              onPressed: DynamicTheme.of(context).toggleBrightness,
-              child: const Text('Toggle brightness'),
-            ),
-            RaisedButton(
-              onPressed: changeColor,
-              child: const Text('Change color'),
+              onPressed: showChooser,
+              child: const Text('Change theme'),
             ),
           ],
         ),
@@ -79,21 +72,11 @@ class _MyHomePageState extends State<MyHomePage> {
       context: context,
       builder: (BuildContext context) {
         return BrightnessSwitcherDialog(
-          onSelectedTheme: (Brightness brightness) {
-            DynamicTheme.of(context).setBrightness(brightness);
+          onSelectedTheme: (ThemeMode themeMode) {
+            DynamicTheme.of(context).setThemeMode(themeMode);
           },
         );
       },
-    );
-  }
-
-  void changeColor() {
-    DynamicTheme.of(context).setThemeData(
-      ThemeData(
-        primaryColor: Theme.of(context).primaryColor == Colors.indigo
-            ? Colors.red
-            : Colors.indigo,
-      ),
     );
   }
 }

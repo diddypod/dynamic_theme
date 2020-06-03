@@ -24,17 +24,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return DynamicTheme(
         key: easyThemeKey,
-        defaultBrightness: Brightness.light,
-        data: (Brightness brightness) {
-          return ThemeData(
-            primarySwatch: Colors.indigo,
-            brightness: brightness,
-          );
-        },
-        themedWidgetBuilder: (BuildContext context, ThemeData theme) {
+        defaultThemeMode: ThemeMode.system,
+        themedWidgetBuilder: (BuildContext context, ThemeMode themeMode) {
           return MaterialApp(
             title: 'Flutter Demo',
-            theme: theme,
+            theme: ThemeData.light(),
+            themeMode: themeMode,
             home: ButtonPage(),
           );
         });
